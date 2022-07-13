@@ -7,7 +7,7 @@ This version is suitable for unitree_legged_sdk v3.4, namely Go1 robot.
 As for Aliengo or A1, please use the v3.2 release version of this package and unitree_legged_sdk v3.2.
 
 # Environmental variables
-'''
+```
 export ROS_PACKAGE_PATH=~/catkin_ws:${ROS_PACKAGE_PATH}
 export GAZEBO_PLUGIN_PATH=~/catkin_ws/devel/lib:${GAZEBO_PLUGIN_PATH}
 export LD_LIBRARY_PATH=~/catkin_ws/devel/lib:${LD_LIBRARY_PATH}
@@ -17,7 +17,7 @@ export UNITREE_LEGGED_SDK_PATH=~/unitree_legged_sdk
 export ALIENGO_SDK_PATH=~/aliengo_sdk
 #amd64, arm32, arm64
 export UNITREE_PLATFORM="amd64"
-'''
+```
 
 
 ## Packages:
