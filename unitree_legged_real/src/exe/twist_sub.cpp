@@ -16,6 +16,16 @@ Use of this source code is governed by the MPL-2.0 license, see LICENSE.
 using namespace UNITREE_LEGGED_SDK;
 
 
+template<typename TLCM>
+void* update_loop(void* param)
+{
+    TLCM *data = (TLCM *)param;
+    while(ros::ok){
+        data->Recv();
+        usleep(2000);
+    }
+}
+
 class Custom
 {
 public:
@@ -28,15 +38,7 @@ public:
 
 
 
-    template<typename TLCM>
-    void* update_loop(void* param)
-    {
-        TLCM *data = (TLCM *)param;
-        while(ros::ok){
-            data->Recv();
-            usleep(2000);
-        }
-    }
+
 
     template<typename TCmd, typename TState, typename TLCM>
     int mainHelper(int argc, char *argv[], TLCM &roslcm)
@@ -79,14 +81,14 @@ public:
     {
         printf("cmdVelCallback is running!\t%ld\n", cmd_vel_count);
 
-        custom.high_cmd = rosMsg2Cmd(msg);
+        high_cmd = rosMsg2Cmd(msg);
 
-        printf("cmd_x_vel = %f\n", custom.high_cmd.velocity[0]);
-        printf("cmd_y_vel = %f\n", custom.high_cmd.velocity[1]);
-        printf("cmd_yaw_vel = %f\n", custom.high_cmd.yawSpeed);
+        printf("cmd_x_vel = %f\n", high_cmd.velocity[0]);
+        printf("cmd_y_vel = %f\n", high_cmd.velocity[1]);
+        printf("cmd_yaw_vel = %f\n", high_cmd.yawSpeed);
 
 
-        pub_high.publish(custom.high_states);
+        pub_high.publish(high_states);
 
         printf("cmdVelCallback ending!\t%ld\n\n", cmd_vel_count++);
     }
@@ -103,8 +105,7 @@ int main(int argc, char *argv[]){
     ros::NodeHandle nh;
     Custom custom;
     pub_high = nh.advertise<unitree_legged_msgs::HighState>("high_state", 1);
-
-    sub_cmd_vel = nh.subscribe("cmd_vel", 1, custom.cmdVelCallback);
+    sub_cmd_vel = nh.subscribe("cmd_vel", 1, &Custom::cmdVelCallback, &custom);
     UNITREE_LEGGED_SDK::LCM roslcm(UNITREE_LEGGED_SDK::HIGHLEVEL);
     custom.mainHelper<UNITREE_LEGGED_SDK::HighCmd, UNITREE_LEGGED_SDK::HighState, UNITREE_LEGGED_SDK::LCM>(argc, argv, roslcm);
 
