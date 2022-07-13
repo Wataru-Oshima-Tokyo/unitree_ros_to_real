@@ -20,11 +20,11 @@ class Custom
 {
 public:
 
-    unitree_legged_msgs::HighCmd high_cmd = {0};
-    unitree_legged_msgs::HighState high_state = {0};
+    unitree_legged_msgs::HighCmd high_cmd;
+    unitree_legged_msgs::HighState high_state;
 
-    unitree_legged_msgs::LowCmd low_cmd = {0};
-    unitree_legged_msgs::LowState low_state = {0};
+    unitree_legged_msgs::LowCmd low_cmd;
+    unitree_legged_msgs::LowState low_state;
 };
 
 
