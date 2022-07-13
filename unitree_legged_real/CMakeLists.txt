@@ -19,12 +19,12 @@ include_directories(
 
 set(CMAKE_CXX_FLAGS "-O3")
 
-include_directories(/home/$ENV{USER}/unitree_legged_sdk/include)
-link_directories(/home/$ENV{USER}/unitree_legged_sdk/lib)
-string(CONCAT LEGGED_SDK_NAME libunitree_legged_sdk_amd64.so)
+include_directories($ENV{UNITREE_LEGGED_SDK_PATH}/include)
+link_directories($ENV{UNITREE_LEGGED_SDK_PATH}/lib)
+string(CONCAT LEGGED_SDK_NAME libunitree_legged_sdk_$ENV{UNITREE_PLATFORM}.so)
 set(EXTRA_LIBS ${LEGGED_SDK_NAME} lcm)
 
-add_executable(lcm_server /home/$ENV{USER}/unitree_legged_sdk/examples/lcm_server.cpp)
+add_executable(lcm_server ($ENV{UNITREE_LEGGED_SDK_PATH}/examples/lcm_server.cpp)
 target_link_libraries(lcm_server ${EXTRA_LIBS} ${catkin_LIBRARIES})
 add_dependencies(lcm_server ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
 
