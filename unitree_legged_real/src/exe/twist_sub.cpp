@@ -65,8 +65,8 @@ public:
         while (ros::ok()){
             motiontime = motiontime+2;
             roslcm.Get(RecvHighLCM);
-            custom.high_state = ToRos(RecvHighLCM);
-            SendHighLCM = ToLcm(custpm.high_cmd, SendHighLCM);
+            high_state = ToRos(RecvHighLCM);
+            SendHighLCM = ToLcm(high_cmd, SendHighLCM);
             roslcm.Send(SendHighLCM);
             ros::spinOnce();
             loop_rate.sleep(); 
@@ -88,7 +88,7 @@ public:
         printf("cmd_yaw_vel = %f\n", high_cmd.yawSpeed);
 
 
-        pub_high.publish(high_states);
+        pub_high.publish(high_state);
 
         printf("cmdVelCallback ending!\t%ld\n\n", cmd_vel_count++);
     }
