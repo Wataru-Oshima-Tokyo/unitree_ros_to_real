@@ -229,4 +229,39 @@ UNITREE_LEGGED_SDK::HighCmd ToLcm(unitree_legged_msgs::HighCmd& ros, UNITREE_LEG
     return lcm;
 }
 
+UNITREE_LEGGED_SDK::HighCmd rosMsg2Cmd(const geometry_msgs::Twist::ConstPtr &msg)
+{
+    UNITREE_LEGGED_SDK::HighCmd cmd;
+
+    cmd.levelFlag = UNITREE_LEGGED_SDK::HIGHLEVEL;
+    cmd.mode = 0;
+    cmd.gaitType = 0;
+    cmd.speedLevel = 0;
+    cmd.footRaiseHeight = 0;
+    cmd.bodyHeight = 0;
+    cmd.euler[0] = 0;
+    cmd.euler[1] = 0;
+    cmd.euler[2] = 0;
+    cmd.velocity[0] = 0.0f;
+    cmd.velocity[1] = 0.0f;
+    cmd.yawSpeed = 0.0f;
+    cmd.reserve = 0;
+
+    cmd.velocity[0] = msg->linear.x;
+    cmd.velocity[1] = msg->linear.y;
+    cmd.yawSpeed = msg->angular.z;
+
+    cmd.mode = 2;
+    cmd.gaitType = 1;
+
+    return cmd;
+}
+
+
+
+
+
+
+
+
 #endif  // _CONVERT_H_
