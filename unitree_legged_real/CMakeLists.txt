@@ -28,9 +28,14 @@ add_executable(lcm_server $ENV{UNITREE_LEGGED_SDK_PATH}/examples/lcm_server.cpp)
 target_link_libraries(lcm_server ${EXTRA_LIBS} ${catkin_LIBRARIES})
 add_dependencies(lcm_server ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
 
+
 add_executable(position_lcm src/exe/position_mode.cpp)
 target_link_libraries(position_lcm ${EXTRA_LIBS} ${catkin_LIBRARIES})
 add_dependencies(position_lcm ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
+
+add_executable(twist_lcm src/exe/twist_sub.cpp)
+target_link_libraries(twist_lcm ${EXTRA_LIBS} ${catkin_LIBRARIES})
+add_dependencies(twist_lcm ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
 
 add_executable(velocity_lcm src/exe/velocity_mode.cpp)
 target_link_libraries(velocity_lcm ${EXTRA_LIBS} ${catkin_LIBRARIES})
