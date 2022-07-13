@@ -30,10 +30,10 @@ class Custom
 {
 public:
 
-    UNITREE_LEGGED_SDK::HighCmd high_cmd;
+    unitree_legged_msgs::HighCmd high_cmd;
     unitree_legged_msgs::HighState high_state;
 
-    UNITREE_LEGGED_SDK::LowCmd low_cmd;
+    unitree_legged_msgs::LowCmd low_cmd;
     unitree_legged_msgs::LowState low_state;
     ros::Subscriber sub_cmd_vel;
     ros::Publisher pub_high;
@@ -56,7 +56,6 @@ public:
         long motiontime = 0;
         TCmd SendHighLCM = {0};
         TState RecvHighLCM = {0};
-        unitree_legged_msgs::HighState RecvHighROS;
 
         roslcm.SubscribeState();
 

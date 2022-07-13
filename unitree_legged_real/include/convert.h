@@ -230,9 +230,9 @@ UNITREE_LEGGED_SDK::HighCmd ToLcm(unitree_legged_msgs::HighCmd& ros, UNITREE_LEG
     return lcm;
 }
 
-UNITREE_LEGGED_SDK::HighCmd rosMsg2Cmd(const geometry_msgs::Twist::ConstPtr &msg)
+unitree_legged_msgs::HighCmd rosMsg2Cmd(const geometry_msgs::Twist::ConstPtr &msg)
 {
-    UNITREE_LEGGED_SDK::HighCmd cmd;
+    unitree_legged_msgs::HighCmd cmd;
 
     cmd.levelFlag = UNITREE_LEGGED_SDK::HIGHLEVEL;
     cmd.mode = 0;
