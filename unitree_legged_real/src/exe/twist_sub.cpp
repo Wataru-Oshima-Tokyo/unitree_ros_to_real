@@ -30,12 +30,13 @@ class Custom
 {
 public:
 
-    unitree_legged_msgs::HighCmd high_cmd;
+    UNITREE_LEGGED_SDK::HighCmd high_cmd;
     unitree_legged_msgs::HighState high_state;
 
-    unitree_legged_msgs::LowCmd low_cmd;
+    UNITREE_LEGGED_SDK::LowCmd low_cmd;
     unitree_legged_msgs::LowState low_state;
-
+    ros::Subscriber sub_cmd_vel;
+    ros::Publisher pub_high;
 
 
 
@@ -97,8 +98,7 @@ public:
 
 
 
-ros::Subscriber sub_cmd_vel;
-ros::Publisher pub_high;
+
 
 int main(int argc, char *argv[]){
     ros::init(argc, argv, "walk_ros_mode");
