@@ -1,9 +1,10 @@
-Packages Version: v3.5.0
+Packages Version: v3.4.0
 
 # Introduction
 This package can send control command to real robot from ROS. You can do low-level control(namely control all joints on robot) and high-level control(namely control the walking direction and speed of robot).
 
-This version is suitable for unitree_legged_sdk v3.5.1, namely Go1 robot. 
+This version is suitable for unitree_legged_sdk v3.4, namely Go1 robot. 
+As for Aliengo or A1, please use the v3.2 release version of this package and unitree_legged_sdk v3.2.
 
 ## Packages:
 
@@ -11,14 +12,12 @@ Basic message function: `unitree_legged_msgs`
 
 The interface between ROS and real robot: `unitree_legged_real`
 
-## Environment
-We recommand users to run this package in Ubuntu 18.04 and ROS melodic environment
-
 # Dependencies
-* [unitree_legged_sdk](https://github.com/unitreerobotics): v3.5.1
+* [unitree_legged_sdk](https://github.com/unitreerobotics): v3.4
 
 # Configuration
-Before compiling this package, users have to download unitree_legged-sdk v.3.5.1 to `~/catkin_ws/src` folder, which is the same folder where you put this package into
+Before compiling this package, users have to modify the path to unitree_legged_sdk under the CMakeLists.txt of unitree_legged_real.
+Just search the "/home/bian/Robot_SDK/unitree_legged_sdk" and change it to your own path. If you are going to compile this package on a computer which is not AMD64 platform, then you have to search "libunitree_legged_sdk.so" under the CMakeLists.txt and change it to the .so file name which is suitable to your computer.
 
 # Build
 You can use catkin_make to build ROS packages. First copy the package folder to `~/catkin_ws/src`, then:
@@ -52,42 +51,20 @@ Where the port name have to be changed to your own.
 # Run the package
 You can control your real Go1 robot from ROS by this package.
 
-Before you run expamle program, please run command
-
 ```
 roslaunch unitree_legged_real real.launch ctrl_level:=highlevel
 ```
-or
-```
-roslaunch unitree_legged_real real.launch ctrl_level:=lowlevel
-```
+This command will launch a LCM server. The `ctrl_level` means the control level, which can be `lowlevel` or `highlevel`(case does not matter), and the default value is `highlevel`. Under the low level, you can control the joints directly. And under the high level, you can control the robot to move or change its pose.
 
-It depends which control mode you want to use.
-
-Then, if you want to run high-level control mode, you can run example_walk node like this
+In order to send message to robot, you need to run the controller in another terminal:
 ```
-rosrun unitree_legged_real example_walk
+rosrun unitree_legged_real position_lcm
 ```
-
-If you want to run low-level control mode, you can run example_position program node like this
+We offered some examples. When you run the low level controller, please make sure the robot is hanging up. The low level contains:
 ```
-rosrun unitree_legged_real example_postion
+position_lcm
+velocity_lcm
+torque_lcm
 ```
 
-You can also run the node state_sub to subscribe the feedback information from Go1 robot
-```
-rosrun unitree_legged_real state_sub
-```
-
-You can also run the launch file that enables you control robot via keyboard like you can do in turtlesim package
-```
-roslaunch unitree_legged_real keyboard_control.launch
-```
-
-And before you do the low-level control, please press L2+A to sit the robot down and then press L1+L2+start to make the robot into
-mode in which you can do joint-level control, finally make sure you hang the robot up before you run low-level control.
-
-
-
-
-
+And when you run the high level controller, please make sure the robot is standing on the ground. The high level exmaple only has `walk_lcm`.
