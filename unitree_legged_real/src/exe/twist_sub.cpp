@@ -104,8 +104,8 @@ int main(int argc, char *argv[]){
     ros::init(argc, argv, "walk_ros_mode");
     ros::NodeHandle nh;
     Custom custom;
-    pub_high = nh.advertise<unitree_legged_msgs::HighState>("high_state", 1);
-    sub_cmd_vel = nh.subscribe("cmd_vel", 1, &Custom::cmdVelCallback, &custom);
+    custom.pub_high = nh.advertise<unitree_legged_msgs::HighState>("high_state", 1);
+    custom.sub_cmd_vel = nh.subscribe("cmd_vel", 1, &Custom::cmdVelCallback, &custom);
     UNITREE_LEGGED_SDK::LCM roslcm(UNITREE_LEGGED_SDK::HIGHLEVEL);
     custom.mainHelper<UNITREE_LEGGED_SDK::HighCmd, UNITREE_LEGGED_SDK::HighState, UNITREE_LEGGED_SDK::LCM>(argc, argv, roslcm);
 
