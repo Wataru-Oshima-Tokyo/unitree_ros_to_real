@@ -16,6 +16,7 @@ Use of this source code is governed by the MPL-2.0 license, see LICENSE.
 #include <unitree_legged_msgs/BmsState.h>
 #include <unitree_legged_msgs/IMU.h>
 #include "unitree_legged_sdk/unitree_legged_sdk.h"
+#include "geometry_msgs/Twist.h"
 
 unitree_legged_msgs::Cartesian ToRos(UNITREE_LEGGED_SDK::Cartesian& lcm){
     unitree_legged_msgs::Cartesian ros;
