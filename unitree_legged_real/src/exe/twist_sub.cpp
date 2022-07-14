@@ -35,12 +35,13 @@ public:
 
     unitree_legged_msgs::LowCmd low_cmd;
     unitree_legged_msgs::LowState low_state;
-    ros::Subscriber sub_cmd_vel;
+    ros::Subscriber sub_cmd_vel, posture_sub;
     ros::Publisher pub_high;
-    std::string CMD_VEL_TOPIC;
+    std::string CMD_VEL_TOPIC,CMD_VEL_POS_TOPIC;
     Custom(){
      ros::NodeHandle private_nh("~");
-     private_nh.param("cmd_vel", CMD_VEL_TOPIC, std::string("/cmd_vel"));    
+     private_nh.param("cmd_vel", CMD_VEL_TOPIC, std::string("/cmd_vel")); 
+     private_nh.param("cmd_vel_posture", CMD_VEL_POS_TOPIC, std::string("/cmd_vel_posture")); 
 
     
     }
@@ -101,16 +102,16 @@ public:
 
         high_cmd = rosMsg2Cmd_posture(posture);
 
-        printf("cmd_x_vel = %f\n", high_cmd.velocity[0]);
-        printf("cmd_y_vel = %f\n", high_cmd.velocity[1]);
-        printf("cmd_yaw_vel = %f\n", high_cmd.yawSpeed);
+        printf("cmd_pitch_vel = %f\n", high_cmd.eular[1]);
+        printf("cmd_yaw_vel = %f\n", high_cmd.eular[2]);
+
 
 
         pub_high.publish(high_state);
 
         printf("cmdVelCallback ending!\t%ld\n\n", cmd_vel_count++);
 
-}
+    }
 
 };
 
@@ -124,6 +125,7 @@ int main(int argc, char *argv[]){
     Custom custom;
     custom.pub_high = nh.advertise<unitree_legged_msgs::HighState>("high_state", 1);
     custom.sub_cmd_vel = nh.subscribe(custom.CMD_VEL_TOPIC, 1, &Custom::cmdVelCallback, &custom);
+    custom.posture_sub = nh.subscribe(custom.CMD_VEL_POS_TOPIC, 1, &Custom::posture_callback, &custom);
     UNITREE_LEGGED_SDK::LCM roslcm(UNITREE_LEGGED_SDK::HIGHLEVEL);
     custom.mainHelper<UNITREE_LEGGED_SDK::HighCmd, UNITREE_LEGGED_SDK::HighState, UNITREE_LEGGED_SDK::LCM>(argc, argv, roslcm);
 
