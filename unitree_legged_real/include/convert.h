@@ -275,18 +275,19 @@ unitree_legged_msgs::HighCmd rosMsg2Cmd_posture(const geometry_msgs::Twist::Cons
     cmd.yawSpeed = 0.0f;
     cmd.reserve = 0;
     
-    if (msg->linear.x >1.5)
-        msg->linear.x = 1.5;
-    else if (msg->linear.x <-1.5)
-        msg->linear.x = -1.5
-    if (msg->angular.z >0.6)
-        msg->angular.z = 0.6;
-    else if (msg->angular.z <-0.6)
-        msg->angular.z = -0.6
-    
-    
     cmd.eular[1] = msg->linear.x;
     cmd.eular[2] = -msg->angular.z;
+    if (cmd.eular[1] >1.5)
+       cmd.eular[1] = 1.5;
+    else if (cmd.eular[1] <-1.5)
+       cmd.eular[1] = -1.5;
+    if (cmd.eular[2] >0.6)
+       cmd.eular[2] = 0.6;
+    else if (cmd.eular[2] <-0.6)
+        cmd.eular[2] = -0.6;
+    
+    
+
     /*
     // 0. idle, default stand  1. force stand (controlled by dBodyHeight + ypr)
 											// 2. target velocity walking (controlled by velocity + yawSpeed)
