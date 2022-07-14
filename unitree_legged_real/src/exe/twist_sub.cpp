@@ -94,6 +94,23 @@ public:
 
         printf("cmdVelCallback ending!\t%ld\n\n", cmd_vel_count++);
     }
+    
+    void posture_callback(const geometry_msgs::Twist& posture){
+
+        printf("cmdVelCallback is running!\t%ld\n", cmd_vel_count);
+
+        high_cmd = rosMsg2Cmd_posture(posture);
+
+        printf("cmd_x_vel = %f\n", high_cmd.velocity[0]);
+        printf("cmd_y_vel = %f\n", high_cmd.velocity[1]);
+        printf("cmd_yaw_vel = %f\n", high_cmd.yawSpeed);
+
+
+        pub_high.publish(high_state);
+
+        printf("cmdVelCallback ending!\t%ld\n\n", cmd_vel_count++);
+
+}
 
 };
 
