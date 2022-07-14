@@ -275,16 +275,16 @@ unitree_legged_msgs::HighCmd rosMsg2Cmd_posture(const geometry_msgs::Twist::Cons
     cmd.yawSpeed = 0.0f;
     cmd.reserve = 0;
     
-    cmd.eular[1] = msg->linear.x;
-    cmd.eular[2] = -msg->angular.z;
-    if (cmd.eular[1] >1.5)
-       cmd.eular[1] = 1.5;
-    else if (cmd.eular[1] <-1.5)
-       cmd.eular[1] = -1.5;
-    if (cmd.eular[2] >0.6)
-       cmd.eular[2] = 0.6;
-    else if (cmd.eular[2] <-0.6)
-        cmd.eular[2] = -0.6;
+    cmd.euler[1] = msg->linear.x;
+    cmd.euler[2] = -msg->angular.z;
+    if (cmd.euler[1] >1.5)
+       cmd.euler[1] = 1.5;
+    else if (cmd.euler[1] <-1.5)
+       cmd.euler[1] = -1.5;
+    if (cmd.euler[2] >0.6)
+       cmd.euler[2] = 0.6;
+    else if (cmd.euler[2] <-0.6)
+        cmd.euler[2] = -0.6;
     
     
 
