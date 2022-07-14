@@ -37,18 +37,20 @@ public:
     unitree_legged_msgs::LowState low_state;
     ros::Subscriber sub_cmd_vel;
     ros::Publisher pub_high;
+    std::string CMD_VEL_TOPIC;
+    Custom(){
+     ros::NodeHandle private_nh("~");
+     private_nh.param("cmd_vel", CMD_VEL_TOPIC, std::string("/cmd_vel"));    
 
+    
+    }
+    
 
 
 
     template<typename TCmd, typename TState, typename TLCM>
     int mainHelper(int argc, char *argv[], TLCM &roslcm)
     {
-        std::cout << "WARNING: Control level is set to HIGH-level." << std::endl
-                << "Make sure the robot is standing on the ground." << std::endl
-                << "Press Enter to continue..." << std::endl;
-        std::cin.ignore();
-
         ros::NodeHandle n;
         ros::Rate loop_rate(500);
 
@@ -104,7 +106,7 @@ int main(int argc, char *argv[]){
     ros::NodeHandle nh;
     Custom custom;
     custom.pub_high = nh.advertise<unitree_legged_msgs::HighState>("high_state", 1);
-    custom.sub_cmd_vel = nh.subscribe("cmd_vel", 1, &Custom::cmdVelCallback, &custom);
+    custom.sub_cmd_vel = nh.subscribe(custom.CMD_VEL_TOPIC, 1, &Custom::cmdVelCallback, &custom);
     UNITREE_LEGGED_SDK::LCM roslcm(UNITREE_LEGGED_SDK::HIGHLEVEL);
     custom.mainHelper<UNITREE_LEGGED_SDK::HighCmd, UNITREE_LEGGED_SDK::HighState, UNITREE_LEGGED_SDK::LCM>(argc, argv, roslcm);
 
