@@ -3,9 +3,5 @@
 
     <node pkg="unitree_legged_real" type="lcm_server" name="node_lcm_server"
           respawn="true" output="screen" args="$(arg ctrl_level)" />
-    <node pkg="unitree_legged_real" type="twist_lcm" name="node_twist_lcm"
-          respawn="false" output="screen"/>
-    <node pkg="unitree_legged_real" type="odom_lcm" name="node_odom_lcm"
-          respawn="false" output="screen"/>
     <param name="control_level" value="$(arg ctrl_level)"/>
 </launch>
