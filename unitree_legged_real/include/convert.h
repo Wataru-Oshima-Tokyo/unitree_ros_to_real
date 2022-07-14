@@ -278,7 +278,21 @@ unitree_legged_msgs::HighCmd rosMsg2Cmd_posture(const geometry_msgs::Twist::Cons
     cmd.velocity[0] = msg->linear.x;
     cmd.velocity[1] = msg->linear.y;
     cmd.yawSpeed = msg->angular.z;
+    /*
+        //look_up/down (yaw)
+    SendHighROS.pitch = -posture.linear.x;
+    if(SendHighROS.pitch > 1.5)
+        SendHighROS.pitch = 1.5;
+    else if (SendHighROS.pitch < -1.5)
+        SendHighROS.pitch = -1.5;
+    //look_right/right (pitch)
+    SendHighROS.yaw = -posture.angular.z;
 
+    if(SendHighROS.yaw > 0.6)
+        SendHighROS.yaw = 0.6;
+    else if (SendHighROS.yaw < -0.6)
+        SendHighROS.yaw = -0.6;
+    */
     cmd.mode = 1;
     cmd.gaitType = 1;
 
