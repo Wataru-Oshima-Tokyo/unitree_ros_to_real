@@ -274,12 +274,41 @@ unitree_legged_msgs::HighCmd rosMsg2Cmd_posture(const geometry_msgs::Twist::Cons
     cmd.velocity[1] = 0.0f;
     cmd.yawSpeed = 0.0f;
     cmd.reserve = 0;
-
-    cmd.velocity[0] = msg->linear.x;
-    cmd.velocity[1] = msg->linear.y;
-    cmd.yawSpeed = msg->angular.z;
+    
+    if (msg->linear.x >1.5)
+        msg->linear.x = 1.5;
+    else if (msg->linear.x <-1.5)
+        msg->linear.x = -1.5
+    if (msg->angular.z >0.6)
+        msg->angular.z = 0.6;
+    else if (msg->angular.z <-0.6)
+        msg->angular.z = -0.6
+    
+    
+    cmd.eular[1] = msg->linear.x;
+    cmd.eular[2] = -msg->angular.z;
     /*
+    // 0. idle, default stand  1. force stand (controlled by dBodyHeight + ypr)
+											// 2. target velocity walking (controlled by velocity + yawSpeed)
+											// 3. target position walking (controlled by position + ypr[0])
+											// 4. path mode walking (reserve for future release)
+											// 5. position stand down. 
+											// 6. position stand up 
+											// 7. damping mode 
+											// 8. recovery stand
+											// 9. backflip
+											// 10. jumpYaw
+											// 11. straightHand
+											// 12. dance1
+											// 13. dance2
+
+    std::array<float, 2> position;       // (unit: m), desired position in inertial frame
+    std::array<float, 3> euler;         // (unit: rad), roll pitch yaw in stand mode
+    std::array<float, 2> velocity;      // (unit: m/s), forwardSpeed, sideSpeed in body frame
+    float yawSpeed;                     // (unit: rad/s), rotateSpeed in body frame
         //look_up/down (yaw)
+        
+    
     SendHighROS.pitch = -posture.linear.x;
     if(SendHighROS.pitch > 1.5)
         SendHighROS.pitch = 1.5;
