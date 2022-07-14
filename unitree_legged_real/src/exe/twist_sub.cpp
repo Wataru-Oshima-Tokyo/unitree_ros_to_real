@@ -96,14 +96,14 @@ public:
         printf("cmdVelCallback ending!\t%ld\n\n", cmd_vel_count++);
     }
     
-    void posture_callback(const geometry_msgs::Twist& posture){
+    void posture_callback(const geometry_msgs::Twist::ConstPtr &posture){
 
         printf("cmdVelCallback is running!\t%ld\n", cmd_vel_count);
 
         high_cmd = rosMsg2Cmd_posture(posture);
 
-        printf("cmd_pitch_vel = %f\n", high_cmd.eular[1]);
-        printf("cmd_yaw_vel = %f\n", high_cmd.eular[2]);
+        printf("cmd_pitch_vel = %f\n", high_cmd.euler[1]);
+        printf("cmd_yaw_vel = %f\n", high_cmd.euler[2]);
 
 
 
