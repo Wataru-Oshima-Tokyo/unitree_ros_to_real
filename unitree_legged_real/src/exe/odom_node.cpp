@@ -66,8 +66,8 @@ int main(int argc, char** argv){
 
     //compute odometry in a typical way given the velocities of the robot
     double dt = (current_time - last_time).toSec();
-    double delta_x = vx * std::cos(th)*dt;
-    double delta_y = vx * std::sin(th)*dt;
+    double delta_x = (vx * std::cos(th) - vy * std::sin(th))*dt;
+    double delta_y = (vx * std::sin(th) + vy* std::cos(th))*dt;
     double delta_th = vth * dt;
 
     x += delta_x;
